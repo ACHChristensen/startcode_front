@@ -1,3 +1,5 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +7,28 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
+}
+@media (max-aspect-ratio: 16/9) {
+  .fullscreen-bg {
+    width: 300%;
+    left: -100%;
+  }
+}
+
+  .fullscreen-bg {
+    overflow: hidden;
+ z-index:-99;
+}
+.video-background iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; 
+  filter: blur(10px);
+  z-index:-99;
 }
 
 code {
@@ -24,67 +48,57 @@ ul.header {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: rgb(161, 150, 150);
- }
-
- ul li Nav{
-   align-items: center;
+ 
  }
  
- ul.header li { float: left;}
+ ul.header li.logout { float: right;
+  padding-right:6vh;
+  padding-top: 1vw;}
+
+ ul.header li.logo {
+   text-align: center;
+   padding-bottom: 1rem;
+   padding-top: 1vw;
+ 
+ }
  
  ul.header li a {
-  padding-top: 10vh;
-  display: block;
-  color: rgb(95, 95, 95);
+  color: rgb(121, 121, 121);
   font-weight: normal;
   text-decoration: none;
-  padding-right:4vh;
-  padding-left: 5vw;
+  
   padding-bottom: 0rem;  
  }
 
  ul.header li a:hover:not(.active) {
-  display: block;
   text-align: center;
   text-decoration: none;
-  color: white; 
+  color: rgb(7, 7, 7); 
  }
  .active{color: white;
-  display: block;
   text-align: center;
-  text-decoration: none;
-  padding:4vh 5vw;  }
+  text-decoration: none; }
 
- ul.header li a:hover:not(.active) { color: white; font-weight: bold;}
- .active { background-color:rgb(65, 65, 65); }
+ ul.header li a:hover:not(.active) { color: rgb(0, 0, 0); font-weight: bold; }
 
  ul.headernav{
- 
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: rgb(65, 65, 65);
   padding-bottom: 1rem;
  }
 
  ul.headernav li a{
- display: block;
-  text-align: center;
   text-decoration: none;
   color: white; 
  }
  ul.headernav li a:hover:not(.active) {
-  display: block;
-  text-align: center;
   text-decoration: none;
-  color: white; 
+  color: rgb(124, 123, 123); 
  }
- .active{color: white;
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  padding:4vh 5vw;  }
+ .active{
+   color: black !important;
+  text-decoration: none;  }
  
 

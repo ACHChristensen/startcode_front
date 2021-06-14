@@ -8,16 +8,29 @@ import {
   useParams,
   useRouteMatch,
   NavLink,
+  Redirect,
+  useHistory
 } from "react-router-dom";
 import "./index.css";
+import "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => setLoggedIn(facade.tjekLogin), []);
+  const history = useHistory();
+  useEffect(() => {
+    setLoggedIn(facade.tjekLogin)
+  }, []);
 
   const logOut = () => {
-    facade.logout().then(() => setLoggedIn(false));
+    facade.logout();
+    setLoggedIn(false);
+    history.push('/');
   };
 
   const login = (user, pass) => {
@@ -26,18 +39,22 @@ function App() {
 
   return (
     <>
+    {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/pGbIOC83-So" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+
+    
       {loggedIn ? (
         <div>
           <HeaderLogo />
-          <HeaderNav/>
+          <HeaderNav />
           <Switch>
-            <Route exact path="/">
-              <Home />
+            <Route path="/home">
+              <Home/>
               {/* <LoggedIn path="/"/> */}
             </Route>
-            <Route path="/logout">
-              <Logout logout={logOut} />
-            </Route>
+            <Route path="/userstory1">
+              <US1/>
+              </Route>
+             <Route path="/logout">{logOut}</Route>
           </Switch>
         </div>
       ) : (
@@ -45,32 +62,44 @@ function App() {
           <LogIn login={login} />
         </Route>
       )}
+       <div><div className="video-background">
+  <iframe className="fullscreen-bg " frameBorder="0" allowtransparency="true" allowFullScreen loop="1"
+    src={"https://www.youtube.com/embed/pGbIOC83-So?autoplay=1&mute=1" } /></div>
+    </div>
     </>
   );
 }
 
-export function Logout(logout) {
-  return (
-    <div>
-      <h3>Er du sikker på du vil logge af?</h3>
-      <button onClick={logout}>Ja</button>
-    </div>
-  );
-}
+// function Logout(logOut) {
+//   return (
+//     <div>
+//       <h3>Er du sikker på du vil logge af?</h3>
+//       <input type="button" id="logoutbutton">Ja</input>
+//     </div>
+//   );
+// }
 
 export function HeaderLogo() {
+  function onSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <div>
       <ul className="header">
-        <li>
-          <NavLink activeClassName="active" to="/logout">
-            Log af
+        <li className="logout">
+          <Link className="active" to="/">
+            <button type="button" className={`btn btn-outline-dark`} id="logout" onSubmit={onSubmit}>
+              Log af
+            </button>
+          </Link>
+        </li>
+        <li className="logo">
+          <NavLink to="/home">
+            <img src="favicon.ico" width="200vw" />
           </NavLink>
         </li>
-      <NavLink  to="/">
-        <img src="favicon.ico" width="200vw" />
-      </NavLink>
-    </ul>
+      </ul>
     </div>
   );
 }
@@ -84,7 +113,7 @@ export function HeaderNav() {
             User Story 1
           </NavLink>
         </li>
-    </ul>
+      </ul>
     </div>
   );
 }
@@ -93,6 +122,14 @@ export function Home() {
   return (
     <>
       <h2>Home is here</h2>
+    </>
+  );
+}
+
+export function US1() {
+  return (
+    <>
+      <h2>Userstory 1 - here</h2>
     </>
   );
 }
@@ -114,7 +151,7 @@ function LogIn({ login }) {
 
   return (
     <>
-      <div class="login padimage">
+      <div className="login padimage">
         <img src="favicon.ico" width="400vw" />
         <h2>Login</h2>
         <form onChange={onChange}>

@@ -2,7 +2,7 @@
 import jwt_decode from "jwt-decode";
 import jwt, { TokenExpiredError } from "jsonwebtoken";
 
-const URL = "http://localhost:8080/jpareststarter";
+const URL = "http://localhost:8080/cathrinesbackend";
 //const URL = HUSK DIN DEPLOYET URL
 
 function handleHttpErrors(res) {
@@ -14,8 +14,8 @@ function handleHttpErrors(res) {
 
 function apiFacade() {
   const setToken = (token) => {
-    // const decodedToken = jwt_decode(token);
-    // let timeBeforeExp = decodedToken["exp"];
+    //const decodedToken = jwt_decode(token);
+    //let timeBeforeExp = decodedToken["exp"];
     window.sessionStorage.setItem("jwtToken", token);
   };
 
@@ -48,16 +48,25 @@ function apiFacade() {
     return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
   };
 
+const tjekRoles = () => {
+  let roles = [];
+  const token = window.sessionStorage.getItem("jwtToken");
+    const decodedToken = jwt_decode(token);
+    roles.push(decodedToken["roles"]);
+    return roles;
+}
+
  const tjekLogin = () => {
-    // let token = window.sessionStorage.getItem("jwtToken");
+    
+  // let token = window.sessionStorage.getItem("jwtToken");
     // if(token.length===0){ return false};
     // const decodedToken = (jwt_decode(token));
     // let timeBeforeExp = decodedToken["exp"];
     // console.log(timeBeforeExp);
     const now = new Date().getTime();
-    console.log("Nu "+now);
     // timeBeforeExp -= now;
     // console.log("Her jeg = " + timeBeforeExp);
+    
     if (
       window.sessionStorage.getItem("jwtToken") == null //|| 0 >= timeBeforeExp
     ) {
@@ -75,7 +84,7 @@ function apiFacade() {
         Accept: "application/json",
       },
     };
-    if (addToken && loggedIn()) {
+    if (addToken && loggedIn) {
       opts.headers["x-access-token"] = getToken();
     }
     if (body) {
